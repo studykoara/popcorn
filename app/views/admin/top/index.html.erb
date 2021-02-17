@@ -1,0 +1,8 @@
+<% @page_title = "管理者トップページ" %>
+<h1><%= @page_title %></h1>
+<ul>
+  <li><%= menu_link_to "映画管理", :admin_movies %></li>
+  <li><%= link_to "映画の新規登録", :new_admin_movie %></li>
+  <li><%= link_to "会員管理", :admin_members %></li>
+  <li><%= link_to "会員の新規登録", :new_admin_member %></li>
+</ul>

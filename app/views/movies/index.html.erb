@@ -1,0 +1,50 @@
+<% @page_title = "映画一覧"%>
+<h1><%= @page_title %></h1>
+
+<%= form_tag :search_movies, method: :get, class: "search" do %>
+  <%= text_field_tag "qtext", params[:qtext] ,:placeholder => "タイトルを入力", :style => "width:250px" %>
+  <input type="date", name="q", id="q">
+  <%= submit_tag "検索" %>
+  <%# <label><%= check_box_tag :down100 %><%#100分未満</label> %>
+  <%# <label><%= check_box_tag :up100 %><%#100分以上</label> %>
+<% end %>
+<p style="color:#ff1010">映画タイトルと上映日(カレンダーアイコンをクリック)で検索ができます↑<br>
+・映画タイトルから、映画の詳細が見れます。<br>
+・上映時間をクリックすると、予約できる座席が表示されます。<br>
+・座席の予約は、ログインをするとできるようになります。
+</p>
+
+<% if @movies.present? %>
+  <table class="list">
+    <tbody>
+      <% @movies.each do |movie| %>
+        <%# <% if movie.performances.present? %>
+          <tr>
+            <td class="title" style="background-color: #9dfca9;"><%= link_to movie.title, movie %></td>
+          </tr>
+          <tr>
+            <td>
+              <% if movie.performances.present? %>
+                <% movie.performances.order(:screening_date, :start_time).each do |perf| %>
+                  <span style="margin-left:5px; margin-right:20px">
+                    <%= perf.screening_date.strftime("%m/%d") %>
+                    <%# <% if current_member %>
+                      <%= link_to "#{perf.start_time.strftime("%H:%M")}~#{perf.end_time.strftime("%H:%M")}", [movie, perf, :seats] %>
+                    <%# <% else %>
+                      <%# <%= "#{perf.start_time.strftime("%H:%M")}~#{perf.end_time.strftime("%H:%M")}" %>
+                    <%# <% end %>
+                  </span>
+                <% end %>
+              <% else %>
+                <p>パフォーマンスがありません。</p>
+              <% end %>
+            </td>
+          </tr>
+        <%# <% end %>
+      <% end %>
+
+    </tbody>
+  </table>
+<% else %>
+  <p>映画がありません。</p>
+<% end %>

@@ -1,0 +1,34 @@
+<%= render "shared/errors", obj: @movie %>
+<table class="attr">
+    <tr>
+        <th><%= form.label :title, "タイトル" %></th>
+        <td><%= form.text_field :title %></td>
+    </tr>
+    <tr>
+        <th><%= form.label :story, "ストーリー" %></th>
+        <td><%= form.text_area :story %></td>
+    </tr>
+    <tr>
+        <th><%= form.label :release_date, "公開日",
+                for: "movie_release_date_1i" %></th>
+        <td><%= form.date_select :release_date,
+                start_year: Time.current.year, end_year: Time.current.year + 5,
+                use_month_numbers: true %></td>
+    </tr>
+    <tr>
+        <th><%= form.label :running_time, "上映時間" %></th>
+        <td><%= form.text_field :running_time %>(分)</td>
+    </tr>
+    <tr>
+        <th><%= form.label :distribution, "配給" %></th>
+        <td><%= form.text_field :distribution %></td>
+    </tr>
+    <tr>
+        <th><%= form.label :director, "監督" %></th>
+        <td><%= form.text_field :director %></td>
+    </tr>
+    <tr>
+        <th><%= form.label :actor, "出演" %></th>
+        <td><%= form.text_field :actor %></td>
+    </tr>
+</table>

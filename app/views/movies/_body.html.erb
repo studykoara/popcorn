@@ -1,0 +1,30 @@
+<table class="attr">
+  <tr>
+    <th>タイトル</th>
+    <td><%= @movie.title %></td>
+  </tr>
+  <tr>
+    <th>ストーリー</th>
+    <td><%= @movie.story %></td>
+  </tr>
+  <tr>
+    <th>公開日</th>
+    <td><%= @movie.release_date&.strftime("%Y年%m月%d日") %></td>
+  </tr>
+  <tr>
+    <th>上映時間</th>
+    <td><%= @movie.running_time %>分</td>
+  </tr>
+  <tr>
+    <th>配給</th>
+    <td><%= @movie.distribution %></td>
+  </tr>
+  <tr>
+    <th>監督</th>
+    <td><%= @movie.director %></td>
+  </tr>
+  <tr>
+    <th>出演</th>
+    <td><%= @movie.actor %></td>
+  </tr>
+</table>

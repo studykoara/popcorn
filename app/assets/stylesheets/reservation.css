@@ -1,0 +1,33 @@
+div#right{
+    width:240px;
+    min-height:500px;
+    height:auto;
+    float:right;
+    margin: 0px;
+    padding-top: 100px;
+
+}
+
+div#left{
+    width:500px;
+    min-height:500px;
+    height:auto;
+    margin-top:10px;
+}
+main#main{
+    width: 780px;
+}
+
+div#right p{
+    margin-bottom: 30px;
+}
+
+div#bg{
+    /* background-image: url("<%= #asset_path('screen.png') %>"); */
+    width: 540px;
+    height: 631px;
+}
+
+div#front_seats{
+    margin: 0px;
+}

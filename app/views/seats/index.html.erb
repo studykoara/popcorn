@@ -1,0 +1,18 @@
+<% if @seats.present? %>
+  <table class="list">
+    <% @seats.each do |seat| %>
+      <td>
+        <% if @reserved.find_by(seat_id: seat.id) %>
+          <%= "#{seat.en_number}-#{seat.number}" %>
+        <% else %>
+          <%= link_to "#{seat.en_number}-#{seat.number}", [:new, @movie, @performance, seat, :reservation] %>
+        <% end %>
+      </td>
+      <% if seat.number == "15" %>
+        <tr></tr>
+      <% end %>
+    <% end %>
+  </table>
+<% else %>
+  <p>シートがありません。</p>
+<% end %>

@@ -1,0 +1,27 @@
+<h2><%= link_to "POPCORN", "/" %></h2>
+<% if current_member %>
+  <ul class="account-menu">
+    <%= menu_link_to current_member.name + "さん", :account %>
+    <%= menu_link_to "ログアウト", :session,
+          method: :delete, data: { confirm: "ログアウトしますか？" } %>
+    <% if current_member&.administrator? %>
+    <% else %>
+      <%= menu_link_to "予約内容確認", "/members/#{current_member.id}/reservations"%>
+    <% end %>
+  </ul>
+<% end %>
+
+<%# <nav class="menubar">
+  <ul>
+    <%= menu_link_to "TOP", "/" %>
+    <%# <%= menu_link_to "会員名簿", :members %>
+  <%# </ul>
+</nav> %>
+
+<%=
+  if controller.kind_of?(Admin::Base)
+    render "shared/admin_menubar"
+  else
+    render "shared/menubar"
+  end
+%>

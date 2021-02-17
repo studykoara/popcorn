@@ -1,0 +1,76 @@
+<% @page_title = "映画一覧"%>
+<h1><%= @page_title %></h1>
+
+<%= form_tag :search_admin_movies, method: :get, class: "search" do %>
+  <%= text_field_tag "qtext", params[:qtext] ,:placeholder => "タイトルを入力", :style => "width:250px" %>
+  <input type="date", name="q", id="q">
+  <%= submit_tag "検索" %>
+  <%# <label><%= check_box_tag :down100 %><%#100分未満</label> %>
+  <%# <label><%= check_box_tag :up100 %><%#100分以上</label> %>
+<% end %>
+<p>映画タイトルと上映日(カレンダーアイコンをクリック)で検索ができます↑</p>
+<div class="toolbar"><%= link_to "映画の新規登録", :new_admin_movie %></div>
+<p style="color:red">・既に予約がある映画は削除することができません。<br>
+・スケジュール管理ボタンから上映時間の追加・削除、残席数の確認ができます。<br>
+・映画タイトルから映画詳細の確認・編集ができます。
+</p>
+<% if @movies.present? %>
+  <table class="list">
+    <tbody>
+      <% @movies.each do |movie| %>
+        <%# <% if movie.performances.present? %>
+        <tr>
+          <td class="title", style="background-color: #9dfca9; width:430px;">
+            <%= link_to movie.title, [:admin, movie] %> - 
+            <%= link_to "[スケジュール管理]", "/admin/movies/#{movie.id}/performances" %>
+          </td>
+          <td>
+            <div style="text-align:right;">
+              <%= link_to "編集", [:edit, :admin, movie] %>
+              <%# | <%= link_to "削除", [:admin, movie], method: :delete,
+                data: { confirm: "本当に削除しますか?" } %>
+              <% n = 0 %><% cnt = 0 %>
+              <% movie.performances.each do |perf| %>
+                <% n = n + 1 %>
+                <% if perf.reservations.present? %>
+                  <% break %>
+                <% else %>
+                  <% cnt = cnt + 1 %>
+                <% end %>
+              <% end %>
+              <% if n == cnt %>
+                | <%= link_to "削除", [:admin, movie], method: :delete,
+                  data: { confirm: "本当に削除しますか?" } %>
+              <% else %>
+                <span>| ×</span>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+      
+        <tr>
+          <td colspan="2">
+            <% if movie.performances.present? %>
+              <% movie.performances.order(:screening_date, :start_time).each do |perf| %>
+                <span style="margin-left:5px; margin-right:20px">
+                  <%= perf.screening_date.strftime("%m/%d") %>
+                  <% if current_member %>
+                    <%= link_to "#{perf.start_time.strftime("%H:%M")}~#{perf.end_time.strftime("%H:%M")}", [movie, perf, :seats] %>
+                  <% else %>
+                    <%= "#{perf.start_time.strftime("%H:%M")}~#{perf.end_time.strftime("%H:%M")}" %>
+                  <% end %>
+                </span>
+              <% end %>
+            <% else %>
+              <p>パフォーマンスがありません。</p>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+      <%# <% end %>
+
+    </tbody>
+  </table>
+<% else %>
+  <p>映画がありません。</p>
+<% end %>

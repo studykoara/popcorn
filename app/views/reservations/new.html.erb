@@ -1,0 +1,27 @@
+<% if current_member&.administrator? %>
+  <p>管理者は予約ができません。<br>
+    管理者以外のアカウントでログインをするか、新規会員登録をしてください。</p>
+<% else %>
+<%=  "#{@seat.en_number}-#{@seat.number}" %>
+
+<%= form_with url: [@movie, @performance, @seat, @reservation],local: true do |form| %>
+    <table class="list" style="text-align:center;width:250px;border-weight:2px; border-color:black;margin-left:50px">
+  <% Kind.all.each do |kind| %>
+      <tr>
+        <td>
+          <%= kind.kind_name %>
+        </td>
+        <td>
+            <%= "¥#{kind.fee}" %>
+        </td>
+      </tr>
+  <% end %>
+    </table>
+  <div style="margin-top:10px; margin-left:183px">
+  <%= select_tag :kind_id ,options_from_collection_for_select(Kind.all, :id, :kind_name ,{:selected => 1}) %>
+  </div>
+  <%= form.hidden_field :performance_id, value: params[:performance_id] %>
+  <%= form.hidden_field :seat_id, value: params[:seat_id] %>
+  <div style="margin-top:20px; margin-left:245px"><%= form.submit %></div>
+<% end %>
+<% end %>

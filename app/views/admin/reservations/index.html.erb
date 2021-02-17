@@ -1,0 +1,48 @@
+<% @page_title = "予約一覧"%>
+<h1><%= @page_title %></h1>
+
+<% if @reservations.present? %>
+  <% @reservations.each do |r| %>
+    <div>
+      <table class="list">
+        <tr>
+          <th>ユーザ名</th>
+          <td><%= r.member.name %></td>
+        <tr>
+          <th>日付</th>
+          <td><%= r.performance.screening_date %></td>
+        </tr>
+        <tr>
+          <th>上映時間</th>
+          <td><%= r.performance.start_time.strftime('%H:%M') %>〜<%= r.performance.end_time.strftime('%H:%M') %></td>
+        </tr>
+        <tr>
+          <th>作品</th>
+          <td><%= r.performance.movie.title %></td>
+        </tr>
+        <tr>
+          <th>座席</th>
+          <td>
+            <% r.seats.each do |seat| %>
+            <div>
+              <%= seat.en_number %>-<%= seat.number %>
+            </div>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+        <% r.kinds.each do |kind| %>
+          <th>券種</th>
+          <td>
+            <div>
+              <%= kind.kind_name %>
+            </div>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+    </div>
+    <% end %>
+<% else %>
+  <p>予約がありません。</p>
+<% end %>

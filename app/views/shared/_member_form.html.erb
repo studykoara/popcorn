@@ -1,0 +1,61 @@
+<%= render "shared/errors", obj: @member %>
+<table class="attr">
+    <tr>
+        <th><%= form.label :name, "ユーザー名" %></th>
+        <td><%= form.text_field :name %></td>
+    </tr>
+    <tr>
+        <th><%= form.label :full_name, "氏名" %></th>
+        <td><%= form.text_field :full_name %></td>
+    </tr>
+    <tr>
+        <th>性別</th>
+        <td>
+        <%= form.radio_button :sex, 1 %>
+        <%= form.label :sex_1, "男" %>
+        <%= form.radio_button :sex, 2 %>
+        <%= form.label :sex_2, "女" %>
+        </td>
+    </tr>
+    <tr>
+        <th><%= form.label :birthday, "誕生日",
+                for: "member_birthday_1i" %></th>
+        <td><%= form.date_select :birthday,
+                start_year: 1940, end_year: Time.current.year,
+                use_month_numbers: true %></td>
+    </tr>
+    <tr>
+        <th><%= form.label :mail, "メールアドレス" %></th>
+        <td><%= form.text_field :mail %></td>
+    </tr>
+    <tr>
+        <th><%= form.label :credit_number, "クレジット番号" %></th>
+        <td><%= form.text_field :credit_number %></td>
+    </tr>
+    <tr>
+        <th><%= form.label :expiration_date, "有効期限" %></th>
+        <td><%= form.date_select :expiration_date,
+                start_year: Time.current.year, end_year: Time.current.year + 5,
+                use_month_numbers: true, discard_day: true %></td>
+    </tr>
+    <tr>
+        <th><%= form.label :authentication_number, "認証コード" %></th>
+        <td><%= form.text_field :authentication_number %></td>
+    </tr>
+    <% if @member.new_record? %>
+        <tr>
+            <th><%= form.label :password, "パスワード"%></th>
+            <td><%= form.text_field :password %></td>
+        </tr>
+    <% end %>
+    <% if controller.kind_of?(Admin::MembersController) %>
+    <tr>
+      <th>管理者</th>
+      <td>
+        <%= form.check_box :administrator,
+              disabled: !current_member.administrator? %>
+        <%= form.label :administrator, "管理者" %>
+      </td>
+    </tr>
+    <% end %>
+</table>
